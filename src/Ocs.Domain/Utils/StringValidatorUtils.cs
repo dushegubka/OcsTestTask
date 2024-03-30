@@ -1,4 +1,4 @@
-﻿namespace Domain.Utils;
+﻿namespace Ocs.Domain.Utils;
 
 public static class StringValidatorUtils
 {

@@ -1,6 +1,6 @@
-﻿using Domain.Utils;
+﻿using Ocs.Domain.Utils;
 
-namespace Domain.Applications;
+namespace Ocs.Domain.Applications;
 
 public class ApplicationOutline
 {

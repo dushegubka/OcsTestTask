@@ -1,9 +1,9 @@
-﻿using Domain.Utils;
+﻿using Ocs.Domain.Utils;
 
-namespace Domain.Applications;
+namespace Ocs.Domain.Applications;
 
 /// <summary>
-/// Описание заявки
+/// Описание заявки. Необязательный параметр
 /// </summary>
 public class ApplicationDescription
 {
@@ -30,7 +30,8 @@ public class ApplicationDescription
 
     public static ApplicationDescription Create(string? value)
     {
-        StringValidatorUtils.ValidateStringValue(value, 300);
+        ArgumentNullException.ThrowIfNull(value);
+        ArgumentOutOfRangeException.ThrowIfGreaterThan(value.Length, 300);
         
         return new ApplicationDescription(value);
     }

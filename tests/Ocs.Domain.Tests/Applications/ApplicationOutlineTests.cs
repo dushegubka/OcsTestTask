@@ -1,5 +1,5 @@
-﻿using Domain.Applications;
-using FluentAssertions;
+﻿using FluentAssertions;
+using Ocs.Domain.Applications;
 
 namespace Ocs.Domain.Tests.Applications;
 

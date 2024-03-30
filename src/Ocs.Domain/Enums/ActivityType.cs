@@ -1,4 +1,4 @@
-﻿namespace Domain.Enums;
+﻿namespace Ocs.Domain.Enums;
 
 public enum ActivityType
 {

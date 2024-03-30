@@ -1,6 +1,6 @@
-﻿using Domain.Enums;
+﻿using Ocs.Domain.Enums;
 
-namespace Domain.Applications;
+namespace Ocs.Domain.Applications;
 
 /// <summary>
 /// Заявка на активность
@@ -52,6 +52,11 @@ public class Application
     /// План выступления
     /// </summary>
     public ApplicationOutline Outline { get; private set; }
+    
+    public void ChangeActivityType(ActivityType activityType)
+    {
+        ActivityType = activityType;
+    }
     
     public static Application Create(
         Guid id,
