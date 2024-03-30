@@ -1,6 +1,6 @@
-﻿using Domain.Applications;
-using Domain.Enums;
-using FluentAssertions;
+﻿using FluentAssertions;
+using Ocs.Domain.Applications;
+using Ocs.Domain.Enums;
 
 namespace Ocs.Domain.Tests.Applications;
 
