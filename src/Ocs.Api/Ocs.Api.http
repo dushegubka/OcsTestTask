@@ -1,6 +1,0 @@
-@Ocs.Api_HostAddress = http://localhost:5261
-
-GET {{Ocs.Api_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
