@@ -12,7 +12,7 @@ using Ocs.Infrastructure;
 namespace Ocs.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240331015030_Initial")]
+    [Migration("20240331175124_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -65,6 +65,22 @@ namespace Ocs.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Applications");
+                });
+
+            modelBuilder.Entity("Ocs.Infrastructure.Users.UserEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }
