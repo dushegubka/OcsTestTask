@@ -30,23 +30,4 @@ public class UserService : IUserService
         
         return UserView.Create(result);
     }
-
-    public async Task<bool> SetDraftApplicationAsync(Guid userId, Application application, CancellationToken cancellationToken)
-    {
-        var user = await _userRepository.GetByIdAsync(userId, cancellationToken);
-
-        if (user is null)
-        {
-            return false;
-        }
-
-        await _userRepository.AssignDraftApplicationAsync(userId, cancellationToken);
-
-        return true;
-    }
-
-    public async Task<bool> SubmitApplicationAsync(Guid userId, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
 }
