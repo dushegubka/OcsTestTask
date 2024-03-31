@@ -16,6 +16,7 @@ public class Application
         ApplicationDescription description,
         ApplicationOutline outline,
         DateTimeOffset submittedAt,
+        DateTimeOffset createdAt,
         bool isSubmitted)
     {
         Id = id;
@@ -25,6 +26,7 @@ public class Application
         Description = description;
         Outline = outline;
         SubmittedAt = submittedAt;
+        CreatedAt = createdAt;
         IsSubmitted = isSubmitted;
     }
     
@@ -59,6 +61,8 @@ public class Application
     public ApplicationOutline Outline { get; private set; }
     
     public DateTimeOffset SubmittedAt { get; private set; }
+    
+    public DateTimeOffset CreatedAt { get; private set; }
 
     public bool IsSubmitted { get; private set; }
     
@@ -96,8 +100,10 @@ public class Application
         ApplicationDescription description,
         ApplicationOutline outline,
         DateTimeOffset submittedAt = default,
+        DateTimeOffset createdAt = default,
         bool isSubmitted = false)
     {
-        return new Application(id, authorId, activityType, name, description, outline, submittedAt, isSubmitted);
+        return new Application(id, authorId, activityType, name, 
+            description, outline, submittedAt, createdAt, isSubmitted);
     }
 }
