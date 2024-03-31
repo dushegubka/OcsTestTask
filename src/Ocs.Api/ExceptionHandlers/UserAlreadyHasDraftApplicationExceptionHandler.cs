@@ -4,6 +4,9 @@ using Ocs.ApplicationLayer.Exceptions;
 
 namespace Ocs.Api.ExceptionHandlers;
 
+/// <summary>
+/// Обработчик исключения UserAlreadyHasDraftApplicationException
+/// </summary>
 public class UserAlreadyHasDraftApplicationExceptionHandler : IExceptionHandler
 {
     private const string ErrorMessage = "Пользователь уже имеет неотправленную заявку";

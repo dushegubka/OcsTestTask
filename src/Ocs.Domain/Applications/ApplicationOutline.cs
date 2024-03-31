@@ -2,6 +2,9 @@
 
 namespace Ocs.Domain.Applications;
 
+/// <summary>
+/// Value object для плана
+/// </summary>
 public class ApplicationOutline
 {
     private ApplicationOutline(string? value)
@@ -9,6 +12,9 @@ public class ApplicationOutline
         Value = value;
     }
 
+    /// <summary>
+    /// Значение
+    /// </summary>
     public string? Value { get; private set; }
     
     public static ApplicationOutline Create(string? value)

@@ -4,6 +4,9 @@ using Ocs.ApplicationLayer.Exceptions;
 
 namespace Ocs.Api.ExceptionHandlers;
 
+/// <summary>
+/// Обработчик исключения UserNotFoundException
+/// </summary>
 public class UserNotFoundExceptionHandler : IExceptionHandler
 {
     private const string ErrorMessage = "Пользователь не найден";

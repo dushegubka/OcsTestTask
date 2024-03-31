@@ -22,9 +22,9 @@ public class UserRepository : IUserRepository
         return user?.ToDomainModel();
     }
 
-    public async Task<User?> CreateAsync(User name, CancellationToken cancellationToken = default)
+    public async Task<User?> CreateAsync(User newUser, CancellationToken cancellationToken = default)
     {
-        var userEntity = name.ToDatabaseEntity();
+        var userEntity = newUser.ToDatabaseEntity();
         
         await _database.Users.AddAsync(userEntity, cancellationToken);
         

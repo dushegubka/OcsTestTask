@@ -5,6 +5,9 @@ using Ocs.ApplicationLayer.Exceptions;
 
 namespace Ocs.Api.ExceptionHandlers;
 
+/// <summary>
+/// Обработчик исключения SubmittedApplicationEditingException
+/// </summary>
 public class SubmittedApplicationEditingExceptionHandler : IExceptionHandler
 {
     private const string ErrorMessage = "Редактирование отправленных на рассмотрение заявок запрещено";

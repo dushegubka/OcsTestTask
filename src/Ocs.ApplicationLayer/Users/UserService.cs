@@ -4,6 +4,9 @@ using Ocs.Domain.Users;
 
 namespace Ocs.ApplicationLayer.Users;
 
+/// <summary>
+/// Сервис для работы с пользователями
+/// </summary>
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
@@ -13,6 +16,7 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
     
+    /// <inheritdoc />
     public async Task<UserView> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var user = await _userRepository.GetByIdAsync(id, cancellationToken);
@@ -20,6 +24,7 @@ public class UserService : IUserService
         return UserView.Create(user);
     }
 
+    /// <inheritdoc />
     public async Task<UserView> CreateAsync(UserCreateView newUser, CancellationToken cancellationToken = default)
     {
         var user = User.Create(

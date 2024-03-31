@@ -2,6 +2,9 @@
 
 namespace Ocs.Domain.Applications;
 
+/// <summary>
+/// Value object для названия
+/// </summary>
 public class ApplicationName
 {
     private ApplicationName(string? value)
@@ -9,6 +12,9 @@ public class ApplicationName
         Value = value;
     }
 
+    /// <summary>
+    /// Значение
+    /// </summary>
     public string? Value { get; private set; }
 
     public static ApplicationName Create(string? value)

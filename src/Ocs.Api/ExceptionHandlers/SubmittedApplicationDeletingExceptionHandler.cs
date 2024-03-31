@@ -4,6 +4,9 @@ using Ocs.ApplicationLayer.Exceptions;
 
 namespace Ocs.Api.ExceptionHandlers;
 
+/// <summary>
+/// Обработчик исключения SubmittedApplicationDeletingException
+/// </summary>
 public class SubmittedApplicationDeletingExceptionHandler : IExceptionHandler
 {
     private const string ErrorMessage = "Удаление отправленных на рассмотрение заявок запрещено";

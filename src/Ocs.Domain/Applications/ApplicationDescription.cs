@@ -17,6 +17,7 @@ public class ApplicationDescription
     /// </summary>
     public string? Value { get; private set; }
 
+    
     public static ApplicationDescription Create(string? value)
     {
         ArgumentNullException.ThrowIfNull(value);
