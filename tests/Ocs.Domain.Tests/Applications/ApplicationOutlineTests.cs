@@ -43,20 +43,4 @@ public class ApplicationOutlineTests
         // Assert
         act.Should().Throw<ArgumentOutOfRangeException>();
     }
-
-    [Fact]
-    public void ApplicationOutline_ChangeValue_Should_ChangeValue()
-    {
-        // Arrange
-        const string value = "очень много текста... прямо детальный план доклада!";
-        const string newValue = "очень много нового текста... прямо детальный план доклада!";
-        
-        // Act
-        var title = ApplicationOutline.Create(value);
-        title.ChangeValue(newValue);
-        
-        // Assert
-        title.Value.Should().Be(newValue);
-        
-    }
 }

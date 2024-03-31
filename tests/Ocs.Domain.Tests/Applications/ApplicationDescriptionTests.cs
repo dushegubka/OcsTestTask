@@ -20,9 +20,7 @@ public class ApplicationDescriptionTests
     
     [Theory]
     [InlineData(null)]
-    [InlineData("")]
-    [InlineData("  ")]
-    public void ApplicationDescription_Create_Should_ThrowArgumentException_When_Value_IsNullOrEmpty(string? value)
+    public void ApplicationDescription_Create_Should_ThrowArgumentException_When_Value_IsNull(string? value)
     {
         // Act
         Action act = () => ApplicationDescription.Create(value);
@@ -42,21 +40,5 @@ public class ApplicationDescriptionTests
         
         // Assert
         act.Should().Throw<ArgumentOutOfRangeException>();
-    }
-
-    [Fact]
-    public void ApplicationDescription_ChangeValue_Should_ChangeValue()
-    {
-        // Arrange
-        const string value = "Напомню, что было в старом релизе!";
-        const string newValue = "Расскажу, что нас ждет в новом релизе!";
-        
-        // Act
-        var title = ApplicationDescription.Create(value);
-        title.ChangeValue(newValue);
-        
-        // Assert
-        title.Value.Should().Be(newValue);
-        
     }
 }

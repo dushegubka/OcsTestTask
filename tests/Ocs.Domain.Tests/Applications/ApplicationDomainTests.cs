@@ -12,7 +12,7 @@ public class ApplicationDomainTests
         // Arrange
         var applicationId = Guid.NewGuid();
         var authorId = Guid.NewGuid();
-        var title = ApplicationTitle.Create("Новые фичи C# vNext");
+        var title = ApplicationName.Create("Новые фичи C# vNext");
         var description = ApplicationDescription.Create("Расскажу что нас ждет в новом релизе!");
         var outline = ApplicationOutline.Create("очень много текста... прямо детальный план доклада!");
 
@@ -30,7 +30,7 @@ public class ApplicationDomainTests
         application.Id.Should().Be(applicationId);
         application.AuthorId.Should().Be(authorId);
         application.ActivityType.Should().Be(ActivityType.Report);
-        application.Title.Should().Be(title);
+        application.Name.Should().Be(title);
         application.Description.Should().Be(description);
         application.Outline.Should().Be(outline);
     }
