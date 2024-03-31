@@ -32,23 +32,4 @@ public class UserRepository : IUserRepository
         
         return userEntity.ToDomainModel();
     }
-
-    public async Task<bool> AssignDraftApplicationAsync(Guid userId, CancellationToken cancellationToken)
-    {
-        var user = await _database.Users
-            .SingleOrDefaultAsync(x => x.Id == userId, cancellationToken);
-
-        if (user is null)
-        {
-            return false;
-        }
-        
-        var userDomain = user.ToDomainModel();
-        
-        _database.Entry(user).CurrentValues.SetValues(userDomain.ToDatabaseEntity());
-
-        await _database.SaveChangesAsync(cancellationToken);
-
-        return true;
-    }
 }

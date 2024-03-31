@@ -7,15 +7,14 @@ using Ocs.Domain.Users;
 using Ocs.Infrastructure.Applications;
 using Ocs.Infrastructure.Extensions;
 using Ocs.Infrastructure.Users;
-using Xunit.Abstractions;
 
 namespace Ocs.ApplicationLayer.Tests;
 
-public class ApplicationServiceTests : IClassFixture<DatabaseFixture>, IDisposable
+public class ApplicationServiceTests : IClassFixture<DatabaseFixture>
 {
     private readonly DatabaseFixture _fixture;
 
-    public ApplicationServiceTests(DatabaseFixture fixture, ITestOutputHelper output)
+    public ApplicationServiceTests(DatabaseFixture fixture)
     {
         _fixture = fixture;
         
@@ -184,11 +183,6 @@ public class ApplicationServiceTests : IClassFixture<DatabaseFixture>, IDisposab
     {
         var dbContext = _fixture.GetDbContext();
         return new UserRepository(dbContext);
-    }
-    
-    public void Dispose()
-    {
-        // TODO release managed resources here
     }
     
     private Application CreateTestApplication()

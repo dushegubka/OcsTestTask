@@ -34,4 +34,11 @@ public class ApplicationDomainTests
         application.Description.Should().Be(description);
         application.Outline.Should().Be(outline);
     }
+    
+    [Fact]
+    public void Application_Create_Should_Throw_Exception_If_Name_Is_Empty()
+    {
+        // Arrange
+        
+    }
 }

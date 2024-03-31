@@ -1,7 +1,4 @@
 ﻿using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
-using Npgsql;
-using Ocs.ApplicationLayer.Exceptions;
 using Ocs.Domain.Applications;
 using Ocs.Domain.Enums;
 using Ocs.Infrastructure.Applications;
