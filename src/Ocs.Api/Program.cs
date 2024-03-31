@@ -28,6 +28,9 @@ builder.Services.AddAppServices();
 // Add exception handlers
 builder.Services.AddExceptionHandlers();
 
+// Add validators
+builder.Services.AddValidators();
+
 var app = builder.Build();
 
 app.UseExceptionHandler((_ => {}));
