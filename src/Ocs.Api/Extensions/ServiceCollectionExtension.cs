@@ -8,5 +8,7 @@ public static class ServiceCollectionExtension
     {
         services.AddExceptionHandler<SubmittedApplicationEditingExceptionHandler>();
         services.AddExceptionHandler<SubmittedApplicationDeletingExceptionHandler>();
+        services.AddExceptionHandler<UserNotFoundExceptionHandler>();
+        services.AddExceptionHandler<UserAlreadyHasDraftApplicationExceptionHandler>();
     }
 }
