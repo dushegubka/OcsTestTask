@@ -1,4 +1,5 @@
 ﻿using Ocs.Domain.Enums;
+using Ocs.Domain.Utils;
 
 namespace Ocs.Domain.Applications;
 
@@ -11,14 +12,14 @@ public class Application
     private Application(Guid id,
         Guid authorId,
         ActivityType activityType,
-        ApplicationTitle title,
+        ApplicationName name,
         ApplicationDescription description,
         ApplicationOutline outline)
     {
         Id = id;
         AuthorId = authorId;
         ActivityType = activityType;
-        Title = title;
+        Name = name;
         Description = description;
         Outline = outline;
     }
@@ -41,7 +42,7 @@ public class Application
     /// <summary>
     /// Заголовок заявки
     /// </summary>
-    public ApplicationTitle Title { get; private set; }
+    public ApplicationName Name { get; private set; }
 
     /// <summary>
     /// Краткое описание для сайта
@@ -58,13 +59,35 @@ public class Application
         ActivityType = activityType;
     }
     
+    public void ChangeName(ApplicationName name)
+    {
+        Name = name;
+    }
+    
+    public void ChangeDescription(ApplicationDescription description)
+    {
+        Description = description;
+    }
+    
+    public void ChangeOutline(ApplicationOutline outline)
+    {
+        Outline = outline;
+    }
+    
+    public void Submit()
+    {
+        IsSubmitted = true;
+        SubmittedAt = DateTimeOffset.UtcNow;
+    }
+    
     public static Application Create(
         Guid id,
         Guid authorId,  
         ActivityType activityType,
-        ApplicationTitle title,
+        ApplicationName name,
         ApplicationDescription description,
         ApplicationOutline outline)
+        ApplicationOutline outline,
     {
         return new Application(id, authorId, activityType, title, description, outline);
     }
