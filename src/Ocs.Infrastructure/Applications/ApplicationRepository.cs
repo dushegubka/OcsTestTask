@@ -101,4 +101,20 @@ public class ApplicationRepository : IApplicationRepository
         
         return applications.Select(x => x.ToDomainModel());
     }
+
+    public async Task<Application?> GetUserDraftApplicationAsync(Guid userId, CancellationToken cancellationToken = default)
+    {
+        var application = await _database.Applications
+            .SingleOrDefaultAsync(x => x.AuthorId == userId && !x.IsSubmitted, cancellationToken);
+        
+        return application?.ToDomainModel();
+    }
+
+    public bool UserHasDraftApplication(Guid userId)
+    {
+        var hasDraft = _database.Applications
+            .Any(x => x.AuthorId == userId && !x.IsSubmitted);
+        
+        return hasDraft;
+    }
 }

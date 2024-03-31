@@ -15,4 +15,8 @@ public interface IApplicationRepository
     Task<IEnumerable<Application>> GetSubmittedAfterAsync(DateTimeOffset date, CancellationToken cancellationToken = default);
     
     Task<IEnumerable<Application>> GetUnsubmittedOlderAsync(DateTimeOffset date, CancellationToken cancellationToken = default);
+    
+    Task<Application?> GetUserDraftApplicationAsync(Guid userId, CancellationToken cancellationToken = default);
+    
+    bool UserHasDraftApplication(Guid userId);
 }
