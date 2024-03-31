@@ -63,6 +63,22 @@ namespace Ocs.Infrastructure.Migrations
 
                     b.ToTable("Applications");
                 });
+
+            modelBuilder.Entity("Ocs.Infrastructure.Users.UserEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
 #pragma warning restore 612, 618
         }
     }
