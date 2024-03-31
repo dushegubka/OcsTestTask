@@ -14,7 +14,9 @@ public class Application
         ActivityType activityType,
         ApplicationName name,
         ApplicationDescription description,
-        ApplicationOutline outline)
+        ApplicationOutline outline,
+        DateTimeOffset submittedAt,
+        bool isSubmitted)
     {
         Id = id;
         AuthorId = authorId;
@@ -22,6 +24,8 @@ public class Application
         Name = name;
         Description = description;
         Outline = outline;
+        SubmittedAt = submittedAt;
+        IsSubmitted = isSubmitted;
     }
     
     /// <summary>
@@ -53,6 +57,10 @@ public class Application
     /// План выступления
     /// </summary>
     public ApplicationOutline Outline { get; private set; }
+    
+    public DateTimeOffset SubmittedAt { get; private set; }
+
+    public bool IsSubmitted { get; private set; }
     
     public void ChangeActivityType(ActivityType activityType)
     {
@@ -86,9 +94,10 @@ public class Application
         ActivityType activityType,
         ApplicationName name,
         ApplicationDescription description,
-        ApplicationOutline outline)
         ApplicationOutline outline,
+        DateTimeOffset submittedAt = default,
+        bool isSubmitted = false)
     {
-        return new Application(id, authorId, activityType, title, description, outline);
+        return new Application(id, authorId, activityType, name, description, outline, submittedAt, isSubmitted);
     }
 }
