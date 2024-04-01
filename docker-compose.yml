@@ -1,0 +1,33 @@
+﻿version: '3.8'
+
+services: 
+  web:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    container_name: 'ocs-app'
+    image: 'mcr.microsoft.com/dotnet/sdk:9.0'
+    build:
+      context: .
+      dockerfile: src/Ocs.Api/Dockerfile
+    ports:
+      - '5000:8080'
+    depends_on: 
+      - "postgres"
+    networks: 
+      - ocs-app
+        
+  postgres:
+    container_name: 'postgres'
+    image: 'postgres'
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'admin'
+      POSTGRES_DB: 'osc_prod'
+    networks: 
+      - ocs-app
+        
+networks:
+  ocs-app:
+    driver: bridge
