@@ -24,11 +24,11 @@ public class UsersController : ControllerBase
     public async Task<ActionResult<ApplicationView>> GetDraftApplication(
         Guid userId, CancellationToken cancellationToken)
     {
-        var isUserExist = _applicationRepository.UserHasDraftApplication(userId);
+        var hasDraft = _applicationRepository.UserHasDraftApplication(userId);
         
-        if (!isUserExist)
+        if (!hasDraft)
         {
-            throw new UserNotFoundException(userId, "Пользователь не найден");
+            return null;
         }
         
         var application = await _applicationRepository
