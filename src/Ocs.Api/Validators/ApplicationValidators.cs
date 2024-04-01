@@ -4,9 +4,9 @@ using Ocs.ApplicationLayer.Users;
 
 namespace Ocs.Api.Validators;
 
-internal class ApplicationCreateViewValidator : AbstractValidator<ApplicationCreateView>
+public class ApplicationCreateViewValidator : AbstractValidator<ApplicationCreateView>
 {
-    internal ApplicationCreateViewValidator()
+    public ApplicationCreateViewValidator()
     {
         RuleFor(x => x.Name)
             .NotEmpty()
@@ -20,9 +20,9 @@ internal class ApplicationCreateViewValidator : AbstractValidator<ApplicationCre
         
     } }
 
-internal class ApplicationEditViewValidator : AbstractValidator<ApplicationEditView>
+public class ApplicationEditViewValidator : AbstractValidator<ApplicationEditView>
 {
-    internal ApplicationEditViewValidator()
+    public ApplicationEditViewValidator()
     {
         RuleFor(x => x.Name)
             .NotEmpty()

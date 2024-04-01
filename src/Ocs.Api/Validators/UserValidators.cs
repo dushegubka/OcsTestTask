@@ -3,9 +3,9 @@ using Ocs.ApplicationLayer.Users;
 
 namespace Ocs.Api.Validators;
 
-internal class UserCreateViewValidator : AbstractValidator<UserCreateView>
+public class UserCreateViewValidator : AbstractValidator<UserCreateView>
 {
-    internal UserCreateViewValidator()
+    public UserCreateViewValidator()
     {
         RuleFor(x => x.Name)
             .NotNull()
