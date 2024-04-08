@@ -41,9 +41,9 @@ public class ApplicationService : IApplicationService
             Guid.NewGuid(), 
             newApplication.Author,
             newApplication.Activity,
-            ApplicationName.Create(newApplication.Name),
-            ApplicationDescription.Create(newApplication.Description),
-            ApplicationOutline.Create(newApplication.Outline),
+            newApplication.Name,
+            newApplication.Description,
+            newApplication.Outline,
             createdAt: DateTimeOffset.UtcNow);
         
         var result = await _repository.CreateAsync(application, cancellationToken);
@@ -75,9 +75,9 @@ public class ApplicationService : IApplicationService
         }
         
         application.ChangeActivityType(updatedApplication.Activity);
-        application.ChangeName(ApplicationName.Create(updatedApplication.Name));
-        application.ChangeDescription(ApplicationDescription.Create(updatedApplication.Description));
-        application.ChangeOutline(ApplicationOutline.Create(updatedApplication.Outline));
+        application.ChangeName(updatedApplication.Name);
+        application.ChangeDescription(updatedApplication.Description);
+        application.ChangeOutline(updatedApplication.Outline);
         
         var result = await _repository.UpdateAsync(application, cancellationToken);
         

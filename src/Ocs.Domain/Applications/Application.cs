@@ -12,9 +12,9 @@ public class Application
     private Application(Guid id,
         Guid authorId,
         ActivityType activityType,
-        ApplicationName name,
-        ApplicationDescription description,
-        ApplicationOutline outline,
+        string name,
+        string description,
+        string outline,
         DateTimeOffset submittedAt,
         DateTimeOffset createdAt,
         bool isSubmitted)
@@ -48,17 +48,17 @@ public class Application
     /// <summary>
     /// Заголовок заявки
     /// </summary>
-    public ApplicationName Name { get; private set; }
+    public string Name { get; private set; }
 
     /// <summary>
     /// Краткое описание для сайта
     /// </summary>
-    public ApplicationDescription Description { get; private set; }
+    public string Description { get; private set; }
     
     /// <summary>
     /// План выступления
     /// </summary>
-    public ApplicationOutline Outline { get; private set; }
+    public string Outline { get; private set; }
     
     /// <summary>
     /// Дата подачи
@@ -86,24 +86,30 @@ public class Application
     /// <summary>
     /// Метод для изменения имени в заявке.
     /// </summary>
-    public void ChangeName(ApplicationName name)
+    public void ChangeName(string name)
     {
+        StringValidatorUtils.NotNullOrWhiteSpaceAndLessThan(name, 100);
+        
         Name = name;
     }
 
     /// <summary>
     /// Метод для изменения описания в заявке.
     /// </summary>
-    public void ChangeDescription(ApplicationDescription description)
+    public void ChangeDescription(string description)
     {
+        StringValidatorUtils.NotNullAndLessThan(description, 300);
+        
         Description = description;
     }
 
     /// <summary>
     /// Метод для изменения плана выступления в заявке.
     /// </summary>
-    public void ChangeOutline(ApplicationOutline outline)
+    public void ChangeOutline(string outline)
     {
+        StringValidatorUtils.NotNullOrWhiteSpaceAndLessThan(outline, 1000);
+        
         Outline = outline;
     }
 
@@ -133,13 +139,17 @@ public class Application
         Guid id,
         Guid authorId,  
         ActivityType activityType,
-        ApplicationName name,
-        ApplicationDescription description,
-        ApplicationOutline outline,
+        string name,
+        string description,
+        string outline,
         DateTimeOffset submittedAt = default,
         DateTimeOffset createdAt = default,
         bool isSubmitted = false)
     {
+        StringValidatorUtils.NotNullOrWhiteSpaceAndLessThan(name, 100);
+        StringValidatorUtils.NotNullAndLessThan(description, 300);
+        StringValidatorUtils.NotNullOrWhiteSpaceAndLessThan(outline, 1000);
+        
         return new Application(id, authorId, activityType, name, 
             description, outline, submittedAt, createdAt, isSubmitted);
     }

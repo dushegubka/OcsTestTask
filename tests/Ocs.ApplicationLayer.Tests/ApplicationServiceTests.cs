@@ -182,9 +182,9 @@ public class ApplicationServiceTests : IClassFixture<DatabaseFixture>
             Guid.NewGuid(),
             Guid.NewGuid(),
             ActivityType.Report,
-            ApplicationName.Create("Test Name"),
-            ApplicationDescription.Create("Test Description"),
-            ApplicationOutline.Create("Test Outline"));
+            "Test Name",
+            "Test Description",
+            "Test Outline");
     }
     
     private Application CreateTestApplication(Guid authorId)
@@ -193,9 +193,9 @@ public class ApplicationServiceTests : IClassFixture<DatabaseFixture>
             Guid.NewGuid(),
             authorId,
             ActivityType.Report,
-            ApplicationName.Create("Test Name"),
-            ApplicationDescription.Create("Test Description"),
-            ApplicationOutline.Create("Test Outline"));
+            "Test Name",
+            "Test Description",
+            "Test Outline");
     }
     
     private ApplicationCreateView CreateTestApplicationCreateView()

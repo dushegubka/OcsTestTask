@@ -50,9 +50,9 @@ public class ApplicationView
             Id = application.Id,
             Author = application.AuthorId,
             Activity = application.ActivityType,
-            Name = application.Name.Value,
-            Description = application.Description.Value,
-            Outline = application.Outline.Value
+            Name = application.Name,
+            Description = application.Description,
+            Outline = application.Outline
         };
     }
 }
