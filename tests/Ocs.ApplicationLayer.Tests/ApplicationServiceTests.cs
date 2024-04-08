@@ -19,29 +19,62 @@ public class ApplicationServiceTests : IClassFixture<DatabaseFixture>
         Initialize();
     }
     
-    /*
-    [Fact(DisplayName = "Должен бросить исключение при попытке создать заявку с несуществующим пользователем")]
-    public async Task CreateAsync_Should_Throw_UserNotFoundException_When_User_Not_Found()
+    [Fact(DisplayName = "Должен бросить исключение при попытке получить заявку с несуществующим Id")]
+    public async Task GetByIdAsync_Should_Throw_ApplicationNotFoundException_When_Application_Does_Not_Exist()
     {
         // Arrange
+        var applicationId = Guid.NewGuid();
         var applicationService = ResolveApplicationService();
-        var applicationCreateView = new ApplicationCreateView()
-        {
-            Activity = ActivityType.Report,
-            Author = Guid.NewGuid(),
-            Description = "Test",
-            Name = "Test",
-            Outline = "Test"
-        };
         
-        // Act 
-        Func<Task> act = async () => await applicationService.CreateAsync(applicationCreateView);
+        // Act
+        var act = () => applicationService.GetByIdAsync(applicationId);
         
         // Assert
-        
-        await Assert.ThrowsAsync<UserNotFoundException>(act);
+        await Assert.ThrowsAsync<ApplicationNotFoundException>(act);
     }
-    */
+    
+    [Fact(DisplayName = "Должен бросить исключение при попытке изменить заявку с несуществующим Id")]
+    public async Task UpdateAsync_Should_Throw_ApplicationNotFoundException_When_Application_Does_Not_Exist()
+    {
+        // Arrange
+        var applicationId = Guid.NewGuid();
+        var applicationService = ResolveApplicationService();
+        var updatedApplication = CreateTestApplicationEditView();
+        
+        // Act
+        var act = () => applicationService.UpdateAsync(applicationId, updatedApplication);
+        
+        // Assert
+        await Assert.ThrowsAsync<ApplicationNotFoundException>(act);
+    }
+    
+    [Fact(DisplayName = "Должен бросить исключение при попытке удалить заявку с несуществующим Id")]
+    public async Task DeleteAsync_Should_Throw_ApplicationNotFoundException_When_Application_Does_Not_Exist()
+    {
+        // Arrange
+        var applicationId = Guid.NewGuid();
+        var applicationService = ResolveApplicationService();
+        
+        // Act
+        var act = () => applicationService.DeleteAsync(applicationId);
+        
+        // Assert
+        await Assert.ThrowsAsync<ApplicationNotFoundException>(act);
+    }
+    
+    [Fact(DisplayName = "Должен бросить исключение при попытке подтвердить заявку с несуществующим Id")]
+    public async Task ApproveAsync_Should_Throw_ApplicationNotFoundException_When_Application_Does_Not_Exist()
+    {
+        // Arrange
+        var applicationId = Guid.NewGuid();
+        var applicationService = ResolveApplicationService();
+        
+        // Act
+        var act = () => applicationService.SubmitAsync(applicationId);
+        
+        // Assert
+        await Assert.ThrowsAsync<ApplicationNotFoundException>(act);
+    }
     
     [Fact(DisplayName = "Должен бросить исключение при попытке создать заявку с пользователем у которого уже есть черновик")]
     public async Task CreateAsync_Should_Throw_UserAlreadyHasDraftApplicationException_When_User_Has_Draft_Application()
