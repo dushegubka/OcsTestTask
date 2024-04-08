@@ -18,6 +18,11 @@ public class ApplicationService : IApplicationService
     public async Task<ApplicationView?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var application = await _repository.GetByIdAsync(id, cancellationToken);
+        
+        if (application is null)
+        {
+            throw new ApplicationNotFoundException(id, "Заявка не найдена");
+        }
 
         return ApplicationView.Create(application);
     }
@@ -65,7 +70,7 @@ public class ApplicationService : IApplicationService
         
         if (application is null)
         {
-            return null;
+            throw new ApplicationNotFoundException(id, "Заявка не найдена");
         }
 
         if (application.IsSubmitted)
@@ -98,7 +103,7 @@ public class ApplicationService : IApplicationService
         
         if (application is null)
         {
-            return false;
+            throw new ApplicationNotFoundException(id, "Заявка не найдена");
         }
 
         if (application.IsSubmitted)
@@ -117,7 +122,7 @@ public class ApplicationService : IApplicationService
 
         if (application is null)
         {
-            return false;
+            throw new ApplicationNotFoundException(id, "Заявка не найдена");
         }
         
         return await _repository.SubmitAsync(id, cancellationToken);
