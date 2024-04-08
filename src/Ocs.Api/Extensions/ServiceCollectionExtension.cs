@@ -13,6 +13,8 @@ public static class ServiceCollectionExtension
         services.AddExceptionHandler<SubmittedApplicationDeletingExceptionHandler>();
         services.AddExceptionHandler<UserNotFoundExceptionHandler>();
         services.AddExceptionHandler<UserAlreadyHasDraftApplicationExceptionHandler>();
+        services.AddExceptionHandler<ApplicationNotFoundExceptionHandler>();
+        services.AddExceptionHandler<IncorrectDateTimeFormatExceptionHandler>();
     }
 
     public static void AddValidators(this IServiceCollection services)
