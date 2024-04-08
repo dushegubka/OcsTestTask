@@ -1,4 +1,4 @@
-﻿namespace Ocs.ApplicationLayer.Users;
+﻿namespace Ocs.ApplicationLayer.Views.Users;
 
 /// <summary>
 /// ДТО создания пользователя

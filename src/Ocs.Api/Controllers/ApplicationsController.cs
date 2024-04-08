@@ -1,9 +1,7 @@
-﻿using System.Globalization;
-using Microsoft.AspNetCore.Mvc;
-using Ocs.ApplicationLayer.Applications;
-using Ocs.ApplicationLayer.Exceptions;
-using Ocs.ApplicationLayer.Extensions;
+﻿using Microsoft.AspNetCore.Mvc;
+using Ocs.ApplicationLayer.Abstractions.Services;
 using Ocs.ApplicationLayer.Utils;
+using Ocs.ApplicationLayer.Views.Applications;
 
 namespace Ocs.Api.Controllers;
 

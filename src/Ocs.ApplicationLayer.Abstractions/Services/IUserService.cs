@@ -1,6 +1,6 @@
-﻿using Ocs.Domain.Applications;
+﻿using Ocs.ApplicationLayer.Views.Users;
 
-namespace Ocs.ApplicationLayer.Users;
+namespace Ocs.ApplicationLayer.Abstractions.Services;
 
 public interface IUserService
 {

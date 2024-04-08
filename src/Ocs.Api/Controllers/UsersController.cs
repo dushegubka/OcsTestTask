@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Ocs.ApplicationLayer.Applications;
-using Ocs.ApplicationLayer.Exceptions;
-using Ocs.ApplicationLayer.Users;
+using Ocs.ApplicationLayer.Abstractions.Services;
+using Ocs.ApplicationLayer.Views.Applications;
+using Ocs.ApplicationLayer.Views.Users;
 using Ocs.Domain.Applications;
 
 namespace Ocs.Api.Controllers;

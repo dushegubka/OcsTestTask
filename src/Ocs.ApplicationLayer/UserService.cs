@@ -1,8 +1,8 @@
-﻿using Ocs.ApplicationLayer.Applications;
-using Ocs.Domain.Applications;
+﻿using Ocs.ApplicationLayer.Abstractions.Services;
+using Ocs.ApplicationLayer.Views.Users;
 using Ocs.Domain.Users;
 
-namespace Ocs.ApplicationLayer.Users;
+namespace Ocs.ApplicationLayer;
 
 /// <summary>
 /// Сервис для работы с пользователями

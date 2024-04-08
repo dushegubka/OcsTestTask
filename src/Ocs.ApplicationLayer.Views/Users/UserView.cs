@@ -1,7 +1,6 @@
-﻿using Ocs.ApplicationLayer.Applications;
-using Ocs.Domain.Users;
+﻿using Ocs.Domain.Users;
 
-namespace Ocs.ApplicationLayer.Users;
+namespace Ocs.ApplicationLayer.Views.Users;
 
 /// <summary>
 /// ДТО пользователя

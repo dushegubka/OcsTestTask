@@ -1,6 +1,6 @@
-﻿using Ocs.Infrastructure.Applications;
+﻿using Ocs.ApplicationLayer.Views.Applications;
 
-namespace Ocs.ApplicationLayer.Applications;
+namespace Ocs.ApplicationLayer.Abstractions.Services;
 
 public interface IApplicationService
 {

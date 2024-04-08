@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
-using Ocs.ApplicationLayer.Users;
+using Ocs.ApplicationLayer.Abstractions.Services;
+using Ocs.ApplicationLayer.Views.Users;
 using Ocs.Infrastructure.Users;
 
 namespace Ocs.ApplicationLayer.Tests;

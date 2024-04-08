@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
-using Ocs.ApplicationLayer.Applications;
+using Ocs.ApplicationLayer.Abstractions.Services;
 using Ocs.ApplicationLayer.Exceptions;
+using Ocs.ApplicationLayer.Views.Applications;
 using Ocs.Domain.Applications;
 using Ocs.Domain.Enums;
 using Ocs.Domain.Users;

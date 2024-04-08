@@ -1,7 +1,7 @@
 ﻿using Ocs.Domain.Applications;
 using Ocs.Domain.Enums;
 
-namespace Ocs.ApplicationLayer.Applications;
+namespace Ocs.ApplicationLayer.Views.Applications;
 
 /// <summary>
 /// ДТО заявки

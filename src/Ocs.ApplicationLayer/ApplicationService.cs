@@ -1,10 +1,10 @@
-﻿using Ocs.ApplicationLayer.Exceptions;
+﻿using Ocs.ApplicationLayer.Abstractions.Services;
+using Ocs.ApplicationLayer.Exceptions;
+using Ocs.ApplicationLayer.Views.Applications;
 using Ocs.Domain.Applications;
 using Ocs.Domain.Users;
-using Ocs.Infrastructure.Applications;
-using Ocs.Infrastructure.Extensions;
 
-namespace Ocs.ApplicationLayer.Applications;
+namespace Ocs.ApplicationLayer;
 
 public class ApplicationService : IApplicationService
 {
@@ -31,8 +31,8 @@ public class ApplicationService : IApplicationService
     /// <param name="newApplication">Новая заявка</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>Созданная заявка</returns>
-    /// <exception cref="UserNotFoundException">Выбрасывается в случае, если пользователь с переданным идентификатором не существует</exception>
-    /// <exception cref="UserAlreadyHasDraftApplicationException">Выбрасывается в случае, если пользователь уже имеет черновик заявки</exception>
+    /// <exception cref="UserAlreadyHasDraftApplicationException">Выбрасывается в случае, если пользователь с переданным идентификатором не существует</exception>
+    /// <exception cref="UserNotFoundException">Выбрасывается в случае, если пользователь уже имеет черновик заявки</exception>
     public async Task<ApplicationView?> CreateAsync(ApplicationCreateView newApplication, CancellationToken cancellationToken = default)
     {
         var user = await _userRepository.GetByIdAsync(newApplication.Author, cancellationToken);

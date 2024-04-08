@@ -1,9 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Ocs.ApplicationLayer.Applications;
-using Ocs.ApplicationLayer.Users;
-using Ocs.Domain.Users;
-using Ocs.Infrastructure.Users;
-
+using Ocs.ApplicationLayer.Abstractions.Services;
 namespace Ocs.ApplicationLayer.Extensions;
 
 public static class ServiceCollectionExtensions

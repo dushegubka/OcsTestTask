@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Ocs.ApplicationLayer.Users;
+using Ocs.ApplicationLayer.Views.Users;
 
 namespace Ocs.Api.Validators;
 

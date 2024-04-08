@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 using Ocs.Api.ExceptionHandlers;
 using Ocs.Api.Validators;
-using Ocs.ApplicationLayer.Applications;
-using Ocs.ApplicationLayer.Users;
+using Ocs.ApplicationLayer.Views.Applications;
+using Ocs.ApplicationLayer.Views.Users;
 
 namespace Ocs.Api.Extensions;
 
