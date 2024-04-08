@@ -6,7 +6,6 @@ public static class ServiceCollectionExtensions
 {
     public static void AddAppServices(this IServiceCollection services)
     {
-        services.AddScoped<IUserService, UserService>();
         services.AddScoped<IApplicationService, ApplicationService>();
     }
 }

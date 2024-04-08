@@ -2,7 +2,6 @@
 using Ocs.Api.ExceptionHandlers;
 using Ocs.Api.Validators;
 using Ocs.ApplicationLayer.Views.Applications;
-using Ocs.ApplicationLayer.Views.Users;
 
 namespace Ocs.Api.Extensions;
 
@@ -20,7 +19,5 @@ public static class ServiceCollectionExtension
     {
         services.AddScoped<IValidator<ApplicationCreateView>, ApplicationCreateViewValidator>();
         services.AddScoped<IValidator<ApplicationEditView>, ApplicationEditViewValidator>();
-        
-        services.AddScoped<IValidator<UserCreateView>, UserCreateViewValidator>();
     }
 }

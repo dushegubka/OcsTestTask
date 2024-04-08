@@ -2,19 +2,16 @@
 using Ocs.ApplicationLayer.Exceptions;
 using Ocs.ApplicationLayer.Views.Applications;
 using Ocs.Domain.Applications;
-using Ocs.Domain.Users;
 
 namespace Ocs.ApplicationLayer;
 
 public class ApplicationService : IApplicationService
 {
     private readonly IApplicationRepository _repository;
-    private readonly IUserRepository _userRepository;
 
-    public ApplicationService(IApplicationRepository applicationRepository, IUserRepository userRepository)
+    public ApplicationService(IApplicationRepository applicationRepository)
     {
         _repository = applicationRepository;
-        _userRepository = userRepository;
     }
     
     /// <inheritdoc />
@@ -35,13 +32,6 @@ public class ApplicationService : IApplicationService
     /// <exception cref="UserNotFoundException">Выбрасывается в случае, если пользователь уже имеет черновик заявки</exception>
     public async Task<ApplicationView?> CreateAsync(ApplicationCreateView newApplication, CancellationToken cancellationToken = default)
     {
-        var user = await _userRepository.GetByIdAsync(newApplication.Author, cancellationToken);
-
-        if (user is null)
-        {
-            throw new UserNotFoundException(newApplication.Author, "Пользователь не найден");
-        }
-        
         if (_repository.UserHasDraftApplication(newApplication.Author))
         {
             throw new UserAlreadyHasDraftApplicationException(newApplication.Author, "У пользователя уже есть черновик заявки");
