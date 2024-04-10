@@ -172,6 +172,13 @@ public class ApplicationService : IApplicationService
 
     public async Task<ApplicationView?> GetUserDraftApplication(Guid authorId, CancellationToken cancellationToken = default)
     {
+        var isAuthorExist = _repository.IsUserExists(authorId);
+        
+        if (!isAuthorExist)
+        {
+            throw new UserNotFoundException(authorId, "Пользователь не найден");
+        }
+        
         var application = await _repository.GetUserDraftApplicationAsync(authorId, cancellationToken);
 
         return application is null ? null : ApplicationView.Create(application);
