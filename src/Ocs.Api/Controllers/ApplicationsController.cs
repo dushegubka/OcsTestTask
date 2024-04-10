@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Ocs.ApplicationLayer.Abstractions.Services;
-using Ocs.ApplicationLayer.Exceptions;
-using Ocs.ApplicationLayer.Utils;
 using Ocs.ApplicationLayer.Views.Applications;
 
 namespace Ocs.Api.Controllers;
@@ -56,28 +54,14 @@ public class ApplicationsController : ControllerBase
 
         return Ok(application);
     }
-
+    
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ApplicationView>>> GetSubmittedAfter(
-        [FromQuery] string submittedAfter,
+    public async Task<ActionResult<IEnumerable<ApplicationView>>> GetFilteredAsync(
+        [FromQuery] ApplicationFilterModel filterModel,
         CancellationToken cancellationToken)
     {
-        var date = DateTimeOffsetUtils.ParseFromQueryParam(submittedAfter);
-
-        var result = await _applicationService.GetSubmittedAfterAsync(date, cancellationToken);
-
-        return Ok(result);
-    }
-
-    [HttpGet("{unsubmittedOlder}")]
-    public async Task<ActionResult<IEnumerable<ApplicationView>>> GetUnsubmittedOlder(
-        string unsubmittedOlder,
-        CancellationToken cancellationToken)
-    {
-        var date = DateTimeOffsetUtils.ParseFromQueryParam(unsubmittedOlder);
-
-        var result = await _applicationService.GetUnsubmittedOlderAsync(date, cancellationToken);
-
+        var result = await _applicationService.FilterAsync(filterModel, cancellationToken);
+        
         return Ok(result);
     }
 
