@@ -1,5 +1,8 @@
-﻿using Ocs.ApplicationLayer.Abstractions.Services;
+﻿using Ocs.ApplicationLayer.Abstractions;
+using Ocs.ApplicationLayer.Abstractions.Services;
 using Ocs.ApplicationLayer.Exceptions;
+using Ocs.ApplicationLayer.Utils;
+using Ocs.ApplicationLayer.Views;
 using Ocs.ApplicationLayer.Views.Applications;
 using Ocs.Domain.Applications;
 
@@ -142,5 +145,27 @@ public class ApplicationService : IApplicationService
         var applications = await _repository.GetUnsubmittedOlderAsync(date, cancellationToken);
         
         return applications.Select(ApplicationView.Create);
+    }
+
+    public async Task<IEnumerable<ApplicationView>> FilterAsync(ApplicationFilterModel filterModel, CancellationToken cancellationToken = default)
+    {
+        if (filterModel.SubmittedAfter is not null && filterModel.UnsubmittedOlder is not null)
+        {
+            throw new ApplicationFiltrationException("Можно задать только один параметр фильтра");
+        }
+
+        if (filterModel.SubmittedAfter is not null)
+        {
+            var submittedAfter = DateTimeOffsetUtils.ParseFromQueryParam(filterModel.SubmittedAfter);
+            return await GetSubmittedAfterAsync(submittedAfter, cancellationToken);
+        }
+
+        if (filterModel.UnsubmittedOlder is not null)
+        {
+            var unsubmittedOlder = DateTimeOffsetUtils.ParseFromQueryParam(filterModel.UnsubmittedOlder);
+            return await GetUnsubmittedOlderAsync(unsubmittedOlder, cancellationToken);
+        }
+
+        throw new ApplicationFiltrationException("Не задан параметр фильтрации");
     }
 }

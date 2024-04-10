@@ -1,4 +1,5 @@
-﻿using Ocs.ApplicationLayer.Views.Applications;
+﻿using Ocs.ApplicationLayer.Views;
+using Ocs.ApplicationLayer.Views.Applications;
 
 namespace Ocs.ApplicationLayer.Abstractions.Services;
 
@@ -60,4 +61,6 @@ public interface IApplicationService
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>Список заявок</returns>
     Task<IEnumerable<ApplicationView>> GetUnsubmittedOlderAsync(DateTimeOffset date, CancellationToken cancellationToken = default);
+    
+    Task<IEnumerable<ApplicationView>> FilterAsync(ApplicationFilterModel filterModel, CancellationToken cancellationToken = default);
 }
