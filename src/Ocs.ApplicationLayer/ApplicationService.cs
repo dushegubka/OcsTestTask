@@ -5,6 +5,7 @@ using Ocs.ApplicationLayer.Utils;
 using Ocs.ApplicationLayer.Views;
 using Ocs.ApplicationLayer.Views.Applications;
 using Ocs.Domain.Applications;
+using Ocs.Infrastructure.Extensions;
 
 namespace Ocs.ApplicationLayer;
 
@@ -167,5 +168,12 @@ public class ApplicationService : IApplicationService
         }
 
         throw new ApplicationFiltrationException("Не задан параметр фильтрации");
+    }
+
+    public async Task<ApplicationView?> GetUserDraftApplication(Guid authorId, CancellationToken cancellationToken = default)
+    {
+        var application = await _repository.GetUserDraftApplicationAsync(authorId, cancellationToken);
+
+        return application is null ? null : ApplicationView.Create(application);
     }
 }

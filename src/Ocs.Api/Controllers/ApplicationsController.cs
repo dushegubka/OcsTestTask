@@ -64,6 +64,8 @@ public class ApplicationsController : ControllerBase
         
         return Ok(result);
     }
+    
+    
 
     [HttpDelete]
     [Route("{id:guid}")]
