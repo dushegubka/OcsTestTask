@@ -16,6 +16,7 @@ public static class ServiceCollectionExtension
         services.AddExceptionHandler<ApplicationNotFoundExceptionHandler>();
         services.AddExceptionHandler<IncorrectDateTimeFormatExceptionHandler>();
         services.AddExceptionHandler<ApplicationFiltrationExceptionHandler>();
+        services.AddExceptionHandler<GlobalExceptionHandler>();
     }
 
     public static void AddValidators(this IServiceCollection services)
