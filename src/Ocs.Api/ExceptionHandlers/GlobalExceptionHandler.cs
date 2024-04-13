@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Ocs.Api.ExceptionHandlers;
 
+/// <summary>
+/// Глобальный обработчик исключений
+/// </summary>
 public class GlobalExceptionHandler : IExceptionHandler
 {
     const string ErrorMessage = "Internal Server Error";

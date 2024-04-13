@@ -4,6 +4,9 @@ using Ocs.ApplicationLayer.Exceptions;
 
 namespace Ocs.Api.ExceptionHandlers;
 
+/// <summary>
+/// Обработчик исключения <see cref="ApplicationFiltrationException"/>
+/// </summary>
 public class ApplicationFiltrationExceptionHandler : IExceptionHandler
 {
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)

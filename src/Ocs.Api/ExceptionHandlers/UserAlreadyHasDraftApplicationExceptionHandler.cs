@@ -5,7 +5,7 @@ using Ocs.ApplicationLayer.Exceptions;
 namespace Ocs.Api.ExceptionHandlers;
 
 /// <summary>
-/// Обработчик исключения UserAlreadyHasDraftApplicationException
+/// Обработчик исключения <see cref="UserAlreadyHasDraftApplicationException"/>
 /// </summary>
 public class UserAlreadyHasDraftApplicationExceptionHandler : IExceptionHandler
 {

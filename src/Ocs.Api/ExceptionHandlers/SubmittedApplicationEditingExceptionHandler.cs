@@ -6,7 +6,7 @@ using Ocs.ApplicationLayer.Exceptions;
 namespace Ocs.Api.ExceptionHandlers;
 
 /// <summary>
-/// Обработчик исключения SubmittedApplicationEditingException
+/// Обработчик исключения <see cref="SubmittedApplicationEditingException"/>
 /// </summary>
 public class SubmittedApplicationEditingExceptionHandler : IExceptionHandler
 {

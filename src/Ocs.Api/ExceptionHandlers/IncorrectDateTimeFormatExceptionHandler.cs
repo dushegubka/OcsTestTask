@@ -4,6 +4,9 @@ using Ocs.ApplicationLayer.Exceptions;
 
 namespace Ocs.Api.ExceptionHandlers;
 
+/// <summary>
+/// Обработчик исключения <see cref="IncorrectDateTimeFormatException"/>
+/// </summary>
 public class IncorrectDateTimeFormatExceptionHandler : IExceptionHandler
 {
     private const string ErrorMessage = "Неверный формат даты";
