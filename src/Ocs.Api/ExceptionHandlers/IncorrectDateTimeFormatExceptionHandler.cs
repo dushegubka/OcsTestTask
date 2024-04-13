@@ -5,22 +5,24 @@ using Ocs.ApplicationLayer.Exceptions;
 namespace Ocs.Api.ExceptionHandlers;
 
 /// <summary>
-/// Обработчик исключения <see cref="UserAlreadyHasDraftApplicationException"/>
+/// Обработчик исключения <see cref="IncorrectDateTimeFormatException"/>
 /// </summary>
-public class UserAlreadyHasDraftApplicationExceptionHandler : IExceptionHandler
+public class IncorrectDateTimeFormatExceptionHandler : IExceptionHandler
 {
-    private const string ErrorMessage = "Пользователь уже имеет неотправленную заявку";
+    private const string ErrorMessage = "Неверный формат даты";
+    const string format = "yyyy-MM-dd HH:mm:ss.ff";
+
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
-        if (exception is not UserAlreadyHasDraftApplicationException userException)
+        if (exception is not IncorrectDateTimeFormatException)
         {
             return false;
         }
         
-        httpContext.Response.StatusCode = 409;
+        httpContext.Response.StatusCode = 400;
 
         var problemDetails = new ProblemDetails();
-        problemDetails.Extensions.Add("userId", userException.UserId);
+        problemDetails.Extensions.Add("expectedFormat", format);
         
         var errorResponse = new ErrorResponse
         {
@@ -30,7 +32,7 @@ public class UserAlreadyHasDraftApplicationExceptionHandler : IExceptionHandler
         };
         
         await httpContext.Response.WriteAsJsonAsync(errorResponse, cancellationToken);
-
+        
         return true;
     }
 }

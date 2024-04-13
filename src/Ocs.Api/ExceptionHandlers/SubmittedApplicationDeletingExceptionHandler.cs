@@ -5,7 +5,7 @@ using Ocs.ApplicationLayer.Exceptions;
 namespace Ocs.Api.ExceptionHandlers;
 
 /// <summary>
-/// Обработчик исключения SubmittedApplicationDeletingException
+/// Обработчик исключения <see cref="SubmittedApplicationDeletingException"/>
 /// </summary>
 public class SubmittedApplicationDeletingExceptionHandler : IExceptionHandler
 {

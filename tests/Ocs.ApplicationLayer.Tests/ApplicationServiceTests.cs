@@ -1,12 +1,10 @@
 ﻿using FluentAssertions;
-using Ocs.ApplicationLayer.Applications;
+using Ocs.ApplicationLayer.Abstractions.Services;
 using Ocs.ApplicationLayer.Exceptions;
+using Ocs.ApplicationLayer.Views.Applications;
 using Ocs.Domain.Applications;
 using Ocs.Domain.Enums;
-using Ocs.Domain.Users;
 using Ocs.Infrastructure.Applications;
-using Ocs.Infrastructure.Extensions;
-using Ocs.Infrastructure.Users;
 
 namespace Ocs.ApplicationLayer.Tests;
 
@@ -21,26 +19,61 @@ public class ApplicationServiceTests : IClassFixture<DatabaseFixture>
         Initialize();
     }
     
-    [Fact(DisplayName = "Должен бросить исключение при попытке создать заявку с несуществующим пользователем")]
-    public async Task CreateAsync_Should_Throw_UserNotFoundException_When_User_Not_Found()
+    [Fact(DisplayName = "Должен бросить исключение при попытке получить заявку с несуществующим Id")]
+    public async Task GetByIdAsync_Should_Throw_ApplicationNotFoundException_When_Application_Does_Not_Exist()
     {
         // Arrange
+        var applicationId = Guid.NewGuid();
         var applicationService = ResolveApplicationService();
-        var applicationCreateView = new ApplicationCreateView()
-        {
-            Activity = ActivityType.Report,
-            Author = Guid.NewGuid(),
-            Description = "Test",
-            Name = "Test",
-            Outline = "Test"
-        };
         
-        // Act 
-        Func<Task> act = async () => await applicationService.CreateAsync(applicationCreateView);
+        // Act
+        var act = () => applicationService.GetByIdAsync(applicationId);
         
         // Assert
+        await Assert.ThrowsAsync<ApplicationNotFoundException>(act);
+    }
+    
+    [Fact(DisplayName = "Должен бросить исключение при попытке изменить заявку с несуществующим Id")]
+    public async Task UpdateAsync_Should_Throw_ApplicationNotFoundException_When_Application_Does_Not_Exist()
+    {
+        // Arrange
+        var applicationId = Guid.NewGuid();
+        var applicationService = ResolveApplicationService();
+        var updatedApplication = CreateTestApplicationEditView();
         
-        await Assert.ThrowsAsync<UserNotFoundException>(act);
+        // Act
+        var act = () => applicationService.UpdateAsync(applicationId, updatedApplication);
+        
+        // Assert
+        await Assert.ThrowsAsync<ApplicationNotFoundException>(act);
+    }
+    
+    [Fact(DisplayName = "Должен бросить исключение при попытке удалить заявку с несуществующим Id")]
+    public async Task DeleteAsync_Should_Throw_ApplicationNotFoundException_When_Application_Does_Not_Exist()
+    {
+        // Arrange
+        var applicationId = Guid.NewGuid();
+        var applicationService = ResolveApplicationService();
+        
+        // Act
+        var act = () => applicationService.DeleteAsync(applicationId);
+        
+        // Assert
+        await Assert.ThrowsAsync<ApplicationNotFoundException>(act);
+    }
+    
+    [Fact(DisplayName = "Должен бросить исключение при попытке подтвердить заявку с несуществующим Id")]
+    public async Task ApproveAsync_Should_Throw_ApplicationNotFoundException_When_Application_Does_Not_Exist()
+    {
+        // Arrange
+        var applicationId = Guid.NewGuid();
+        var applicationService = ResolveApplicationService();
+        
+        // Act
+        var act = () => applicationService.SubmitAsync(applicationId);
+        
+        // Assert
+        await Assert.ThrowsAsync<ApplicationNotFoundException>(act);
     }
     
     [Fact(DisplayName = "Должен бросить исключение при попытке создать заявку с пользователем у которого уже есть черновик")]
@@ -54,9 +87,7 @@ public class ApplicationServiceTests : IClassFixture<DatabaseFixture>
 
         var applicationService = ResolveApplicationService();
         var applicationRepository = ResolveApplicationRepository();
-        var userRepository = ResolveUserRepository();
         
-        await userRepository.CreateAsync(User.Create(userId, UserName.Create("Admin")));
         await applicationRepository.CreateAsync(application);
 
         // Act
@@ -168,9 +199,8 @@ public class ApplicationServiceTests : IClassFixture<DatabaseFixture>
     {
         var dbContext = _fixture.GetDbContext();
         var applicationRepository = new ApplicationRepository(dbContext);
-        var userRepository = new UserRepository(dbContext);
         
-        return new ApplicationService(applicationRepository, userRepository);
+        return new ApplicationService(applicationRepository);
     }
     
     private IApplicationRepository ResolveApplicationRepository()
@@ -179,21 +209,15 @@ public class ApplicationServiceTests : IClassFixture<DatabaseFixture>
         return new ApplicationRepository(dbContext);
     }
     
-    private IUserRepository ResolveUserRepository()
-    {
-        var dbContext = _fixture.GetDbContext();
-        return new UserRepository(dbContext);
-    }
-    
     private Application CreateTestApplication()
     {
         return Application.Create(
             Guid.NewGuid(),
             Guid.NewGuid(),
             ActivityType.Report,
-            ApplicationName.Create("Test Name"),
-            ApplicationDescription.Create("Test Description"),
-            ApplicationOutline.Create("Test Outline"));
+            "Test Name",
+            "Test Description",
+            "Test Outline");
     }
     
     private Application CreateTestApplication(Guid authorId)
@@ -202,9 +226,9 @@ public class ApplicationServiceTests : IClassFixture<DatabaseFixture>
             Guid.NewGuid(),
             authorId,
             ActivityType.Report,
-            ApplicationName.Create("Test Name"),
-            ApplicationDescription.Create("Test Description"),
-            ApplicationOutline.Create("Test Outline"));
+            "Test Name",
+            "Test Description",
+            "Test Outline");
     }
     
     private ApplicationCreateView CreateTestApplicationCreateView()

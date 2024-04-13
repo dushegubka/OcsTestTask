@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Ocs.ApplicationLayer.Applications;
-using Ocs.ApplicationLayer.Exceptions;
-using Ocs.ApplicationLayer.Users;
-using Ocs.Domain.Applications;
+using Ocs.ApplicationLayer.Abstractions.Services;
+using Ocs.ApplicationLayer.Views.Applications;
 
 namespace Ocs.Api.Controllers;
 
@@ -10,43 +8,20 @@ namespace Ocs.Api.Controllers;
 [Route("[controller]")]
 public class UsersController : ControllerBase
 {
-    private readonly IUserService _userService;
-    private readonly IApplicationRepository _applicationRepository;
+    private readonly IApplicationService _applicationService;
 
-    public UsersController(IUserService userService, IApplicationRepository applicationRepository)
+    public UsersController(IApplicationService applicationService)
     {
-        _userService = userService;
-        _applicationRepository = applicationRepository;
+        _applicationService = applicationService;
     }
-
+    
     [HttpGet]
-    [Route("{userId:guid}/currentapplication")]
-    public async Task<ActionResult<ApplicationView>> GetDraftApplication(
-        Guid userId, CancellationToken cancellationToken)
-    {
-        var hasDraft = _applicationRepository.UserHasDraftApplication(userId);
-        
-        if (!hasDraft)
-        {
-            return null;
-        }
-        
-        var application = await _applicationRepository
-            .GetUserDraftApplicationAsync(userId, cancellationToken);
-        
-        if (application is null)
-        {
-            return NotFound();
-        }
-        
-        return Ok(ApplicationView.Create(application));
-    }
-
-    [HttpPost]
-    public async Task<ActionResult<UserView>> CreateUser([FromBody] UserCreateView newUser, 
+    [Route("{authorId:guid}/currentapplication")]
+    public async Task<ActionResult<ApplicationView>> GetCurrentUnsubmittedAsync(
+        Guid authorId,
         CancellationToken cancellationToken)
     {
-        var result = await _userService.CreateAsync(newUser, cancellationToken);
+        var result = await _applicationService.GetUserDraftApplication(authorId, cancellationToken);
         
         return Ok(result);
     }

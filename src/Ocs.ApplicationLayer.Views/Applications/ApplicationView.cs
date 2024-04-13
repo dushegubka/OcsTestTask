@@ -1,7 +1,7 @@
 ﻿using Ocs.Domain.Applications;
 using Ocs.Domain.Enums;
 
-namespace Ocs.ApplicationLayer.Applications;
+namespace Ocs.ApplicationLayer.Views.Applications;
 
 /// <summary>
 /// ДТО заявки
@@ -50,9 +50,9 @@ public class ApplicationView
             Id = application.Id,
             Author = application.AuthorId,
             Activity = application.ActivityType,
-            Name = application.Name.Value,
-            Description = application.Description.Value,
-            Outline = application.Outline.Value
+            Name = application.Name,
+            Description = application.Description,
+            Outline = application.Outline
         };
     }
 }

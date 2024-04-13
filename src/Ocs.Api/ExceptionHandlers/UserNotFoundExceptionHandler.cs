@@ -5,7 +5,7 @@ using Ocs.ApplicationLayer.Exceptions;
 namespace Ocs.Api.ExceptionHandlers;
 
 /// <summary>
-/// Обработчик исключения UserNotFoundException
+/// Обработчик исключения <see cref="UserNotFoundException"/>
 /// </summary>
 public class UserNotFoundExceptionHandler : IExceptionHandler
 {

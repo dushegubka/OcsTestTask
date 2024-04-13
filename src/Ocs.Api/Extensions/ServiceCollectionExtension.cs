@@ -1,8 +1,7 @@
 ﻿using FluentValidation;
 using Ocs.Api.ExceptionHandlers;
 using Ocs.Api.Validators;
-using Ocs.ApplicationLayer.Applications;
-using Ocs.ApplicationLayer.Users;
+using Ocs.ApplicationLayer.Views.Applications;
 
 namespace Ocs.Api.Extensions;
 
@@ -14,13 +13,15 @@ public static class ServiceCollectionExtension
         services.AddExceptionHandler<SubmittedApplicationDeletingExceptionHandler>();
         services.AddExceptionHandler<UserNotFoundExceptionHandler>();
         services.AddExceptionHandler<UserAlreadyHasDraftApplicationExceptionHandler>();
+        services.AddExceptionHandler<ApplicationNotFoundExceptionHandler>();
+        services.AddExceptionHandler<IncorrectDateTimeFormatExceptionHandler>();
+        services.AddExceptionHandler<ApplicationFiltrationExceptionHandler>();
+        services.AddExceptionHandler<GlobalExceptionHandler>();
     }
 
     public static void AddValidators(this IServiceCollection services)
     {
         services.AddScoped<IValidator<ApplicationCreateView>, ApplicationCreateViewValidator>();
         services.AddScoped<IValidator<ApplicationEditView>, ApplicationEditViewValidator>();
-        
-        services.AddScoped<IValidator<UserCreateView>, UserCreateViewValidator>();
     }
 }

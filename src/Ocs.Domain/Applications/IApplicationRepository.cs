@@ -75,4 +75,11 @@ public interface IApplicationRepository
     /// <param name="userId">Id пользователя</param>
     /// <returns>Флаг наличия</returns>
     bool UserHasDraftApplication(Guid userId);
+
+    /// <summary>
+    /// Проверяет существует ли в базе заявка от указанного пользователя
+    /// </summary>
+    /// <param name="id">Id пользователя</param>
+    /// <returns>Флаг существования</returns>
+    bool IsUserExists(Guid id);
 }

@@ -1,26 +1,32 @@
-﻿using Ocs.ApplicationLayer.Exceptions;
+﻿using Ocs.ApplicationLayer.Abstractions;
+using Ocs.ApplicationLayer.Abstractions.Services;
+using Ocs.ApplicationLayer.Exceptions;
+using Ocs.ApplicationLayer.Utils;
+using Ocs.ApplicationLayer.Views;
+using Ocs.ApplicationLayer.Views.Applications;
 using Ocs.Domain.Applications;
-using Ocs.Domain.Users;
-using Ocs.Infrastructure.Applications;
 using Ocs.Infrastructure.Extensions;
 
-namespace Ocs.ApplicationLayer.Applications;
+namespace Ocs.ApplicationLayer;
 
 public class ApplicationService : IApplicationService
 {
     private readonly IApplicationRepository _repository;
-    private readonly IUserRepository _userRepository;
 
-    public ApplicationService(IApplicationRepository applicationRepository, IUserRepository userRepository)
+    public ApplicationService(IApplicationRepository applicationRepository)
     {
         _repository = applicationRepository;
-        _userRepository = userRepository;
     }
     
     /// <inheritdoc />
     public async Task<ApplicationView?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var application = await _repository.GetByIdAsync(id, cancellationToken);
+        
+        if (application is null)
+        {
+            throw new ApplicationNotFoundException(id, "Заявка не найдена");
+        }
 
         return ApplicationView.Create(application);
     }
@@ -31,17 +37,10 @@ public class ApplicationService : IApplicationService
     /// <param name="newApplication">Новая заявка</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>Созданная заявка</returns>
-    /// <exception cref="UserNotFoundException">Выбрасывается в случае, если пользователь с переданным идентификатором не существует</exception>
-    /// <exception cref="UserAlreadyHasDraftApplicationException">Выбрасывается в случае, если пользователь уже имеет черновик заявки</exception>
+    /// <exception cref="UserAlreadyHasDraftApplicationException">Выбрасывается в случае, если пользователь с переданным идентификатором не существует</exception>
+    /// <exception cref="UserNotFoundException">Выбрасывается в случае, если пользователь уже имеет черновик заявки</exception>
     public async Task<ApplicationView?> CreateAsync(ApplicationCreateView newApplication, CancellationToken cancellationToken = default)
     {
-        var user = await _userRepository.GetByIdAsync(newApplication.Author, cancellationToken);
-
-        if (user is null)
-        {
-            throw new UserNotFoundException(newApplication.Author, "Пользователь не найден");
-        }
-        
         if (_repository.UserHasDraftApplication(newApplication.Author))
         {
             throw new UserAlreadyHasDraftApplicationException(newApplication.Author, "У пользователя уже есть черновик заявки");
@@ -51,9 +50,9 @@ public class ApplicationService : IApplicationService
             Guid.NewGuid(), 
             newApplication.Author,
             newApplication.Activity,
-            ApplicationName.Create(newApplication.Name),
-            ApplicationDescription.Create(newApplication.Description),
-            ApplicationOutline.Create(newApplication.Outline),
+            newApplication.Name,
+            newApplication.Description,
+            newApplication.Outline,
             createdAt: DateTimeOffset.UtcNow);
         
         var result = await _repository.CreateAsync(application, cancellationToken);
@@ -75,7 +74,7 @@ public class ApplicationService : IApplicationService
         
         if (application is null)
         {
-            return null;
+            throw new ApplicationNotFoundException(id, "Заявка не найдена");
         }
 
         if (application.IsSubmitted)
@@ -85,9 +84,9 @@ public class ApplicationService : IApplicationService
         }
         
         application.ChangeActivityType(updatedApplication.Activity);
-        application.ChangeName(ApplicationName.Create(updatedApplication.Name));
-        application.ChangeDescription(ApplicationDescription.Create(updatedApplication.Description));
-        application.ChangeOutline(ApplicationOutline.Create(updatedApplication.Outline));
+        application.ChangeName(updatedApplication.Name);
+        application.ChangeDescription(updatedApplication.Description);
+        application.ChangeOutline(updatedApplication.Outline);
         
         var result = await _repository.UpdateAsync(application, cancellationToken);
         
@@ -108,7 +107,7 @@ public class ApplicationService : IApplicationService
         
         if (application is null)
         {
-            return false;
+            throw new ApplicationNotFoundException(id, "Заявка не найдена");
         }
 
         if (application.IsSubmitted)
@@ -127,7 +126,7 @@ public class ApplicationService : IApplicationService
 
         if (application is null)
         {
-            return false;
+            throw new ApplicationNotFoundException(id, "Заявка не найдена");
         }
         
         return await _repository.SubmitAsync(id, cancellationToken);
@@ -147,5 +146,41 @@ public class ApplicationService : IApplicationService
         var applications = await _repository.GetUnsubmittedOlderAsync(date, cancellationToken);
         
         return applications.Select(ApplicationView.Create);
+    }
+
+    public async Task<IEnumerable<ApplicationView>> FilterAsync(ApplicationFilterModel filterModel, CancellationToken cancellationToken = default)
+    {
+        if (filterModel.SubmittedAfter is not null && filterModel.UnsubmittedOlder is not null)
+        {
+            throw new ApplicationFiltrationException("Можно задать только один параметр фильтра");
+        }
+
+        if (filterModel.SubmittedAfter is not null)
+        {
+            var submittedAfter = DateTimeOffsetUtils.ParseFromQueryParam(filterModel.SubmittedAfter);
+            return await GetSubmittedAfterAsync(submittedAfter, cancellationToken);
+        }
+
+        if (filterModel.UnsubmittedOlder is not null)
+        {
+            var unsubmittedOlder = DateTimeOffsetUtils.ParseFromQueryParam(filterModel.UnsubmittedOlder);
+            return await GetUnsubmittedOlderAsync(unsubmittedOlder, cancellationToken);
+        }
+
+        throw new ApplicationFiltrationException("Не задан параметр фильтрации");
+    }
+
+    public async Task<ApplicationView?> GetUserDraftApplication(Guid authorId, CancellationToken cancellationToken = default)
+    {
+        var isAuthorExist = _repository.IsUserExists(authorId);
+        
+        if (!isAuthorExist)
+        {
+            throw new UserNotFoundException(authorId, "Пользователь не найден");
+        }
+        
+        var application = await _repository.GetUserDraftApplicationAsync(authorId, cancellationToken);
+
+        return application is null ? null : ApplicationView.Create(application);
     }
 }

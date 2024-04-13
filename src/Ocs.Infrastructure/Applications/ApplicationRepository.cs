@@ -85,6 +85,14 @@ public class ApplicationRepository : IApplicationRepository
         return true;
     }
 
+    public bool IsUserExists(Guid id)
+    {
+        var exists = _database.Applications
+            .Any(x => x.AuthorId == id);
+        
+        return exists;
+    }
+
     public async Task<IEnumerable<Application>> GetSubmittedAfterAsync(DateTimeOffset date, CancellationToken cancellationToken = default)
     {
         var applications = await _database.Applications

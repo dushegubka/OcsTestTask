@@ -196,8 +196,8 @@ public class ApplicationRepositoryTests
             Guid.NewGuid(),
             Guid.NewGuid(),
             ActivityType.Report,
-            ApplicationName.Create("Test Name"),
-            ApplicationDescription.Create("Test Description"),
-            ApplicationOutline.Create("Test Outline"));
+            "Test Name",
+            "Test Description",
+            "Test Outline");
     }
 }

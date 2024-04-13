@@ -12,9 +12,9 @@ public class ApplicationDomainTests
         // Arrange
         var applicationId = Guid.NewGuid();
         var authorId = Guid.NewGuid();
-        var title = ApplicationName.Create("Новые фичи C# vNext");
-        var description = ApplicationDescription.Create("Расскажу что нас ждет в новом релизе!");
-        var outline = ApplicationOutline.Create("очень много текста... прямо детальный план доклада!");
+        var title = "Новые фичи C# vNext";
+        var description = "Расскажу что нас ждет в новом релизе!";
+        var outline = "очень много текста... прямо детальный план доклада!";
 
         // Act
         var application = Application.Create(
@@ -54,7 +54,7 @@ public class ApplicationDomainTests
         // Arrange
         var application = CreateApplication();
 
-        var newName = ApplicationName.Create("Новое название");
+        var newName = "Новое название";
         
         // Act
         application.ChangeName(newName);
@@ -69,7 +69,7 @@ public class ApplicationDomainTests
         // Arrange
         var application = CreateApplication();
         
-        var newOutline = ApplicationOutline.Create("новый план доклада");
+        var newOutline = "Новый план доклада";
         
         // Act
         application.ChangeOutline(newOutline);
@@ -84,7 +84,7 @@ public class ApplicationDomainTests
         // Arrange
         var application = CreateApplication();
         
-        var newDescription = ApplicationDescription.Create("Новое описание");
+        var newDescription = "Новое описание";
         
         // Act
         application.ChangeDescription(newDescription);
@@ -110,9 +110,9 @@ public class ApplicationDomainTests
     {
         var applicationId = Guid.NewGuid();
         var authorId = Guid.NewGuid();
-        var name = ApplicationName.Create("Новые фичи C# vNext");
-        var description = ApplicationDescription.Create("Расскажу что нас ждет в новом релизе!");
-        var outline = ApplicationOutline.Create("очень много текста... прямо детальный план доклада!");
+        var name = "Новые фичи C# vNext";
+        var description = "Расскажу что нас ждет в новом релизе!";
+        var outline = "очень много текста... прямо детальный план доклада!";
         
         
         return Application.Create(
